@@ -1,4 +1,5 @@
 package com.example.registercomplete.model;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
@@ -14,6 +16,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @Table(value = "cliente")
 @Getter
@@ -27,17 +31,19 @@ public class Cliente implements UserDetails {
 
     @NotNull
     @NotEmpty
-    private String primeiroNome;
+    @Column("firstname")
+    private String fisrtName;
 
     @NotNull
     @NotEmpty
-    private String ultimoNome;
+    @Column("lastname")
+    private String lastName;
 
     @NotNull
     @NotEmpty
     private String password;
 
-    @Email(message = "email invalido")
+    @Email
     @NotEmpty
     @Column(value = "email")
     private String email;
@@ -51,12 +57,12 @@ public class Cliente implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Collections.singletonList(new SimpleGrantedAuthority("USER"));
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return email;
     }
 
     @Override
