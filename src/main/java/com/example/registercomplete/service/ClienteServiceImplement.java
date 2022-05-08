@@ -11,4 +11,9 @@ import org.springframework.stereotype.Service;
 public class ClienteServiceImplement implements ClienteService {
     private final ClienteRepository clienteRepository;
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return null;
+    }
+
 }

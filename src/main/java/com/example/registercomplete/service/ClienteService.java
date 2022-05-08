@@ -1,4 +1,6 @@
 package com.example.registercomplete.service;
 
-public interface ClienteService {
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+public interface ClienteService extends UserDetailsService {
 }

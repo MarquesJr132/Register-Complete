@@ -8,18 +8,18 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.UUID;
 
 @Data
 @Table(value = "cliente")
 public class Cliente implements UserDetails {
 
     @Id
-    private Long id;
+    @Column("id")
+    private final String id = UUID.randomUUID().toString();
 
     @NotNull
     @NotEmpty
@@ -31,25 +31,33 @@ public class Cliente implements UserDetails {
     @Column("lastname")
     private String lastName;
 
+    @NotBlank
     @NotNull
     @NotEmpty
+    @Min(value = 6)
+    @Column("password")
     private String password;
 
     @Email
     @NotEmpty
-    @Column(value = "email")
+    @Column("email")
     private String email;
 
+    @Column("active")
+    private boolean active = false;
 
-    @Column(value = "active")
-    private boolean active;
+    @Column("locked")
+    private boolean locked = false;
 
-    @Column(value = "locked")
-    private boolean locked;
+
+    @NotBlank
+    @NotNull
+    @Column("role")
+    private String role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority("USER"));
+        return Collections.singletonList(new SimpleGrantedAuthority(role));
     }
 
     @Override
