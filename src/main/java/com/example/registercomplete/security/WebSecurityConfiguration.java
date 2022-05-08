@@ -27,9 +27,7 @@ import org.springframework.security.web.server.util.matcher.PathPatternParserSer
 @Configuration
 @EnableWebFluxSecurity
 @RequiredArgsConstructor
-public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final ClienteServiceImplement clienteService;
+public class  WebSecurityConfiguration {
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @Autowired
@@ -61,15 +59,4 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return http.build();
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        super.configure(auth);
-    }
-    @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider(){
-        var provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(bCryptPasswordEncoder);
-        provider.setUserDetailsService(clienteService);
-        return provider;
-    }
 }
