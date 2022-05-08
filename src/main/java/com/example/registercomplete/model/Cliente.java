@@ -49,6 +49,13 @@ public class Cliente implements UserDetails {
     @Column("locked")
     private boolean locked = false;
 
+    public Cliente(String fisrtName, String lastName, String password, String email, String role) {
+        this.fisrtName = fisrtName;
+        this.lastName = lastName;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+    }
 
     @NotBlank
     @NotNull
